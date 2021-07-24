@@ -1,16 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic;  // TODO: Р›РёС€РЅРёРµ Р±РёР±Р»РёРѕС‚РµРєРё
 using UnityEngine;
 
 public class RoadParts : MonoBehaviour
 {
 
     //Preferences
-    public int distanceBeforeDestroyed;
+    public int distanceBeforeDestroyed;  // TODO: private
     public int RoadBlockLenght;
     public int RoadBlockWidht;
 
-    public RoadParts InstantiateRoadPart(Vector3 position)
+    public RoadParts InstantiateRoadPart(Vector3 position) // TODO: РРЅСЃС‚Р°РЅС†РёСЂСѓРµС‚ СЃР°Рј СЃРµР±СЏ? Р›СѓС‡С€Рµ РїСѓСЃС‚СЊ СЌС‚Рѕ РґРµР»Р°РµС‚ РєР°РєРѕР№-РЅРёР±СѓРґСЊ SpawnController
     {
         transform.position = position;
         Instantiate(this, position, Quaternion.identity);
@@ -27,7 +27,7 @@ public class RoadParts : MonoBehaviour
         return RoadBlockWidht;
     }
 
-    public bool FarEnough(float z) //Проверка, проехала ли машина игрока этот блок на достаточное расстояние
+    public bool FarEnough(float z) //ГЏГ°Г®ГўГҐГ°ГЄГ , ГЇГ°Г®ГҐГµГ Г«Г  Г«ГЁ Г¬Г ГёГЁГ­Г  ГЁГЈГ°Г®ГЄГ  ГЅГІГ®ГІ ГЎГ«Г®ГЄ Г­Г  Г¤Г®Г±ГІГ ГІГ®Г·Г­Г®ГҐ Г°Г Г±Г±ГІГ®ГїГ­ГЁГҐ
     {
 
         if (z > transform.position.z + RoadBlockLenght + distanceBeforeDestroyed)
@@ -43,7 +43,7 @@ public class RoadParts : MonoBehaviour
 
     public void Delete()
     {
-        Destroy(gameObject); //Удаление блока
+        Destroy(gameObject); //Г“Г¤Г Г«ГҐГ­ГЁГҐ ГЎГ«Г®ГЄГ 
     }
 
 }
