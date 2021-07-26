@@ -1,49 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;  // TODO: Лишние библиотеки
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RoadParts : MonoBehaviour
 {
 
     //Preferences
-    public int distanceBeforeDestroyed;  // TODO: private
-    public int RoadBlockLenght;
-    public int RoadBlockWidht;
+    [SerializeField] private float roadBlockLenght;
+    [SerializeField] private float roadBlockWidht;
+    [SerializeField] private float roadZMovingSpeedPerSec;
 
-    public RoadParts InstantiateRoadPart(Vector3 position) // TODO: Инстанцирует сам себя? Лучше пусть это делает какой-нибудь SpawnController
-    {
-        transform.position = position;
-        Instantiate(this, position, Quaternion.identity);
-        return this;
-    }
+    private float roadZMovingSpeedPerFrame;
 
-    public float GetBlockLenght() 
+    public float GetBlockLenght()
     {
-        return RoadBlockLenght;
+        return roadBlockLenght;
     }
 
     public float GetBlockWidth()
     {
-        return RoadBlockWidht;
+        return roadBlockWidht;
     }
 
-    public bool FarEnough(float z) //Ïðîâåðêà, ïðîåõàëà ëè ìàøèíà èãðîêà ýòîò áëîê íà äîñòàòî÷íîå ðàññòîÿíèå
+    // Start is called before the first frame update
+    private void Start()
     {
 
-        if (z > transform.position.z + RoadBlockLenght + distanceBeforeDestroyed)
-        {
-            return true; 
-        }
-        else 
-        { 
-            return false; 
-        }
-        
     }
 
-    public void Delete()
+    // Update is called once per frame
+    private void Update()
     {
-        Destroy(gameObject); //Óäàëåíèå áëîêà
+        float currentStep  = roadZMovingSpeedPerSec * Time.deltaTime;
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - currentStep);
     }
-
 }

@@ -321,6 +321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 785239913}
+  - component: {fileID: 785239915}
   - component: {fileID: 785239914}
   m_Layer: 0
   m_Name: Road
@@ -337,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785239912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 837163197}
@@ -354,13 +355,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 785239912}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 838d3b780603a8b4ea12de956dfd0a3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 837163193}
+  roadPart: {fileID: 1622865146}
+  road: {fileID: 785239912}
+  MinimumRoadParts: 3
+--- !u!114 &785239915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785239912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7f975d076126c44e8b248c25f6fc8ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blocks: []
-  roadBlocksPrefab: {fileID: 1622865146}
-  playerPrefab: {fileID: 837163193}
-  playerVision: 50
 --- !u!1 &837163193
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +386,7 @@ GameObject:
   - component: {fileID: 837163196}
   - component: {fileID: 837163195}
   - component: {fileID: 837163194}
+  - component: {fileID: 837163199}
   - component: {fileID: 837163198}
   m_Layer: 0
   m_Name: Player
@@ -452,7 +466,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837163193}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0.6, z: -4}
+  m_LocalPosition: {x: 2.5, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1275014400}
@@ -468,13 +482,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 837163193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6074534f9ee114fa4de3b026bc12ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 77732e681527f604fa336f4aa6bbc191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roadPrefab_: {fileID: 785239912}
-  changeSideCooldownSec_: 0.5
-  fullChangeTime_: 0.1
-  playerWidth_: 1
+  currentSide: 1
+  bottomSideCoordinates: {x: 2.5, y: 0.6, z: 0}
+  leftSideCoordinates: {x: 0.6, y: 2.5, z: 0}
+  rightSideCoordinates: {x: 4.4, y: 2.5, z: 0}
+  topSideCoordinates: {x: 2.5, y: 4.4, z: 0}
+  changeSideCooldownSec: 0.5
+  fullSideChangeTime: 0.4
+--- !u!114 &837163199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837163193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64bce996defdf94f95ebc9462911dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadObject: {fileID: 785239912}
+  playerWidth: 1
+  playerLength: 1
+  playerVisibilityRange: 100
 --- !u!1 &904748700
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +808,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622865146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.52}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 904748701}
@@ -797,9 +830,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb3a383fed9f2d4dbcc50fbb34dd794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceBeforeDestroyed: 50
-  RoadBlockLenght: 10
-  RoadBlockWidht: 0
+  roadBlockLenght: 10
+  roadBlockWidht: 5
+  roadZMovingSpeedPerSec: 10
 --- !u!1 &1737152030
 GameObject:
   m_ObjectHideFlags: 0
