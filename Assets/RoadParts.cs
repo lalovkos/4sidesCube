@@ -6,7 +6,7 @@ public class RoadParts : MonoBehaviour
 {
 
     //Preferences
-    [SerializeField] private float roadBlockLenght;
+    [SerializeField] private float roadBlockLenght;  // Зачем классу поля, которые он не использует? Убери их туда, где они нужны.
     [SerializeField] private float roadBlockWidht;
     [SerializeField] private float roadZMovingSpeedPerSec;
 
@@ -29,7 +29,7 @@ public class RoadParts : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    private void Update() // Проверку можно делать через коллайдер, и не использовать Update. Описал в Discord.
     {
         float currentStep  = roadZMovingSpeedPerSec * Time.deltaTime;
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - currentStep);
