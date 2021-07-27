@@ -37,6 +37,7 @@ public class SpawnController : MonoBehaviour
             Vector3 newRoadblockPos = new Vector3(transform.position.x, transform.position.y, playerZPosition + i * roadBlockLenght);
             GameObject newRoadBlock = Instantiate(roadPart, newRoadblockPos, Quaternion.identity) as GameObject;
             newRoadBlock.SetActive(true);
+            newRoadBlock.transform.SetParent(road.transform);
             roadBlocks.Add(newRoadBlock);
         }
 
@@ -49,16 +50,31 @@ public class SpawnController : MonoBehaviour
     {
         //Проверяем блоки, проехали ли мы их, если проехали, перемещаем блоки вперед
         float playerZPosition = player.GetComponent<PlayerController>().transform.position.z;
+        lastRoadBlockZCoordinate = lastZPosition();
         foreach (var block in roadBlocks)
         {
+            //TODO: Оптимизировать
             if (playerZPosition > block.transform.position.z + roadBlockLenght) //Позиция игрока находится за частью дороги
             {
-                //TODO: Исправить баг с перемещением
                 //Перемещаем блок вперед
-                block.transform.position = new Vector3(transform.position.x, transform.position.y, lastRoadBlockZCoordinate); 
+                block.transform.position = new Vector3(transform.position.x, transform.position.y, lastRoadBlockZCoordinate + roadBlockLenght); 
 
             }
         }
         
+    }
+
+    private float lastZPosition()
+    {
+        float lastZPos = 0;
+        foreach (var block in roadBlocks)
+        {
+            if (lastZPos < block.transform.position.z)
+            {
+                lastZPos = block.transform.position.z;
+            }
+        }
+
+        return lastZPos;
     }
 }

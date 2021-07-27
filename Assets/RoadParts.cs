@@ -33,5 +33,17 @@ public class RoadParts : MonoBehaviour
     {
         float currentStep  = roadZMovingSpeedPerSec * Time.deltaTime;
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - currentStep);
+
+        if (transform.position.z < -1000)
+        {
+            Delete();
+        }    
+    
+    }
+
+    public void Delete()
+    {
+        Destroy(this);
+
     }
 }
