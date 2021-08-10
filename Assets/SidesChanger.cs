@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SidesChanger : MonoBehaviour
+public class SidesChanger : MonoBehaviour // РР·РјРµРЅСЏРµС‚ СЃС‚РѕСЂРѕРЅСѓ, Р° РЅРµ СѓРїСЂР°РІР»СЏРµС‚ РїРµСЂРµРјРµС‰РµРЅРёРµРј Player. Р›РёС€РЅСЏСЏ Р»РѕРіРёРєР° РїРµСЂРµРјРµС‰РµРЅРёСЏ.
 {
-    private enum ESides : int
+    private enum ESides : int // Р›СѓС‡С€Рµ РІ РѕС‚РґРµР»СЊРЅС‹Р№ С„Р°Р№Р» РІС‹РЅРµСЃС‚Рё Enum
     {  
         bottom = 1,
         left = 2,
@@ -15,26 +15,26 @@ public class SidesChanger : MonoBehaviour
     
     [SerializeField] private ESides currentSide;
 
-    //Координаты, на которые будет переносить игрока
+    //ГЉГ®Г®Г°Г¤ГЁГ­Г ГІГ», Г­Г  ГЄГ®ГІГ®Г°Г»ГҐ ГЎГіГ¤ГҐГІ ГЇГҐГ°ГҐГ­Г®Г±ГЁГІГј ГЁГЈГ°Г®ГЄГ 
     [SerializeField] private Vector3 bottomSideCoordinates;
     [SerializeField] private Vector3 leftSideCoordinates;
     [SerializeField] private Vector3 rightSideCoordinates;
     [SerializeField] private Vector3 topSideCoordinates;
 
-    //Время отката смены стороны
+    //Г‚Г°ГҐГ¬Гї Г®ГІГЄГ ГІГ  Г±Г¬ГҐГ­Г» Г±ГІГ®Г°Г®Г­Г»
     [SerializeField] private float changeSideCooldownSec;
     [SerializeField] private float fullSideChangeTime;
 
 
-    private Vector3 moveTowardsCoordinates; //Координаты, к которым двигается игрок
-    private float moveTowardsStep;          //Шаг за секунду
-    private float moveTowardsAngle;         //Поворот  за секунду
-    private float nextSideChange;           //Время когда можно будет изменить сторону
-    private float AngleLeft;                //Угол оставшийся для поворота
+    private Vector3 moveTowardsCoordinates; //ГЉГ®Г®Г°Г¤ГЁГ­Г ГІГ», ГЄ ГЄГ®ГІГ®Г°Г»Г¬ Г¤ГўГЁГЈГ ГҐГІГ±Гї ГЁГЈГ°Г®ГЄ
+    private float moveTowardsStep;          //ГГ ГЈ Г§Г  Г±ГҐГЄГіГ­Г¤Гі // Р›СѓС‡С€Рµ РїСЂРёСЃРІРѕРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ, Р° РЅРµ РІС‹С‡РёСЃР»СЏС‚СЊ. Р’РґСЂСѓРі Р·Р°С…РѕС‡РµС‚СЃСЏ СЃРґРµР»Р°С‚СЊ Р±РѕРЅСѓСЃ, РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ СѓРІРµР»РёС‡РёРІР°С‚СЊ СЃРєРѕСЂРѕСЃС‚СЊ РёРіСЂС‹ Рё РїРµСЂРµРјРµС‰РµРЅРёРµ С‚РѕРіРґР° С‚Рѕ Р¶Рµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ Р±С‹СЃС‚СЂРµРµ.
+    private float moveTowardsAngle;         //ГЏГ®ГўГ®Г°Г®ГІ  Г§Г  Г±ГҐГЄГіГ­Г¤Гі
+    private float nextSideChange;           //Г‚Г°ГҐГ¬Гї ГЄГ®ГЈГ¤Г  Г¬Г®Г¦Г­Г® ГЎГіГ¤ГҐГІ ГЁГ§Г¬ГҐГ­ГЁГІГј Г±ГІГ®Г°Г®Г­Гі
+    private float AngleLeft;                //Г“ГЈГ®Г« Г®Г±ГІГ ГўГёГЁГ©Г±Гї Г¤Г«Гї ГЇГ®ГўГ®Г°Г®ГІГ 
 
-    private const float kRotateAngle = -90; //Угол поворота
+    private const float kRotateAngle = -90; //Г“ГЈГ®Г« ГЇГ®ГўГ®Г°Г®ГІГ 
 
-    //TODO: Сделать начальные координаты в соответствии с начальной стороной
+    //TODO: Г‘Г¤ГҐГ«Г ГІГј Г­Г Г·Г Г«ГјГ­Г»ГҐ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» Гў Г±Г®Г®ГІГўГҐГІГ±ГІГўГЁГЁ Г± Г­Г Г·Г Г«ГјГ­Г®Г© Г±ГІГ®Г°Г®Г­Г®Г©
     // Start is called before the first frame update
     private void Start()
     {
@@ -42,7 +42,7 @@ public class SidesChanger : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update() {
+    private void Update() { 
 
         if (Input.GetButton("Fire1") && Time.time > nextSideChange)
         {
@@ -50,9 +50,9 @@ public class SidesChanger : MonoBehaviour
             ChangeSide();
         }
 
-        if (Vector3.Distance(transform.position, moveTowardsCoordinates) > 0.0001)
+        if (Vector3.Distance(transform.position, moveTowardsCoordinates) > 0.0001) // Р›РѕРіРёРєР° РїРµСЂРµРјРµС‰РµРЅРёСЏ РІ РґСЂСѓРіРѕРј РєРѕРЅС‚СЂРѕР»Р»РµСЂРµ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ.
         {
-            //Перемещаем игрока на новую точку и вращаем
+            //ГЏГҐГ°ГҐГ¬ГҐГ№Г ГҐГ¬ ГЁГЈГ°Г®ГЄГ  Г­Г  Г­Г®ГўГіГѕ ГІГ®Г·ГЄГі ГЁ ГўГ°Г Г№Г ГҐГ¬
             transform.position = Vector3.MoveTowards(transform.position, moveTowardsCoordinates,
                 moveTowardsStep * Time.deltaTime);
             transform.Rotate(0, 0, moveTowardsAngle * Time.deltaTime);
@@ -60,7 +60,7 @@ public class SidesChanger : MonoBehaviour
         }
         else
         {   
-            //Для того, чтобы угол был равным в конце поворота
+            //Г„Г«Гї ГІГ®ГЈГ®, Г·ГІГ®ГЎГ» ГіГЈГ®Г« ГЎГ»Г« Г°Г ГўГ­Г»Г¬ Гў ГЄГ®Г­Г¶ГҐ ГЇГ®ГўГ®Г°Г®ГІГ 
             if (AngleLeft != 0)
             {
                 transform.Rotate(0, 0, AngleLeft);
