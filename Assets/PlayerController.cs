@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     //Preferences
     [SerializeField] private float playerWidth;
     [SerializeField] private float playerLength;
-    [SerializeField] private float playerVisibilityRange;
+    [SerializeField] private float playerVisibilityRange; // Не используемое поле.
 
     // Start is called before the first frame update
     private void Start()   
